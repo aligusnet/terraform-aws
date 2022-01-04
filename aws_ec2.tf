@@ -21,6 +21,7 @@ data "aws_ami" "amazon-linux2" {
 
 resource "aws_security_group" "ec2" {
     name = "vote-processor-sg"
+    vpc_id = aws_vpc.main.id
 
     ingress {
         from_port = 22
@@ -42,7 +43,9 @@ resource "aws_instance" "vote" {
     instance_type = "t2.micro"
     iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
     user_data = file("vote-processor/user-data.sh")
-    security_groups = [aws_security_group.ec2.name]
+    subnet_id = aws_subnet.public.id
+    vpc_security_group_ids = [aws_security_group.ec2.id]
+    
     tags = {
         Name = "vote-processor"
     }

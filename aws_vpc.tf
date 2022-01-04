@@ -1,16 +1,26 @@
 resource "aws_vpc" "main" {
     cidr_block = "10.42.0.0/16"
     instance_tenancy = "default"
+    tags = {
+        Name = "voting-vpc"
+    }
 }
 
 resource "aws_subnet" "private" {
     cidr_block = "10.42.0.0/24"
     vpc_id = aws_vpc.main.id
+    tags = {
+        Name = "voting-subnet-private"
+    }
 }
 
 resource "aws_subnet" "public" {
     cidr_block = "10.42.1.0/24"
     vpc_id = aws_vpc.main.id
+    map_public_ip_on_launch = true
+    tags = {
+        Name = "voting-subnet-public"
+    }
 }
 
 resource "aws_internet_gateway" "gateway" {
