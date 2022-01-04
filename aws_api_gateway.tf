@@ -44,7 +44,7 @@ resource "aws_apigatewayv2_stage" "default" {
     auto_deploy = "true"
 
     access_log_settings {
-        destination_arn = aws_cloudwatch_log_group.voting_gateway.arn
+        destination_arn = aws_cloudwatch_log_group.api_gateway.arn
         format = "$context.identity.sourceIp - - [$context.requestTime] \"$context.httpMethod $context.routeKey $context.protocol\" $context.status $context.responseLength $context.requestId"
     }
 }
@@ -77,7 +77,7 @@ resource "aws_apigatewayv2_integration" "result-lambda" {
     integration_uri = aws_lambda_function.result.invoke_arn
 }
 
-resource "aws_cloudwatch_log_group" "voting_gateway" {
-  name              = "/aws/api_gateway/${var.api_gateway_name}"
+resource "aws_cloudwatch_log_group" "api_gateway" {
+  name = "/aws/api_gateway/${var.api_gateway_name}"
   retention_in_days = 3
 }

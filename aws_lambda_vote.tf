@@ -2,7 +2,7 @@ variable "voting_lambda_function_name" {
   default = "lambda_voting"
 }
 
-resource "aws_cloudwatch_log_group" "_voting-lambda" {
+resource "aws_cloudwatch_log_group" "voting_lambda" {
     name = "/aws/lambda/${var.voting_lambda_function_name}"
     retention_in_days = 3
 }
@@ -28,4 +28,8 @@ resource "aws_lambda_function" "vote" {
             TOPIC_ARN = aws_sns_topic.votes_topic.arn
         }
     }
+
+    depends_on = [
+        aws_cloudwatch_log_group.voting_lambda,
+    ]
 }
