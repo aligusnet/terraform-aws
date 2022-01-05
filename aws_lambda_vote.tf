@@ -22,6 +22,7 @@ resource "aws_lambda_function" "vote" {
     source_code_hash = filebase64sha256(data.archive_file.lambda_vote.output_path)
 
     runtime = "python3.9"
+    architectures = ["arm64"]
 
     environment {
         variables = {

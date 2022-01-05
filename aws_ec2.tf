@@ -10,7 +10,7 @@ data "aws_ami" "amazon-linux2" {
 
     filter {
         name = "architecture"
-        values = ["x86_64"]
+        values = ["arm64"]
     }
 
     filter {
@@ -40,7 +40,7 @@ resource "aws_security_group" "ec2" {
 
 resource "aws_instance" "vote" {
     ami = data.aws_ami.amazon-linux2.id
-    instance_type = "t2.micro"
+    instance_type = "t4g.micro"
     iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
     user_data = file("vote-processor/user-data.sh")
     subnet_id = aws_subnet.public.id
