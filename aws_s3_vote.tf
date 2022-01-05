@@ -19,20 +19,26 @@ data "template_file" "s3_public_policy" {
     }
 }
 
+data "template_file" "vote_index_file" {
+    template = "${file("${path.module}/voting-frontend/index.html")}"
+    vars = {
+        backend-url = "${aws_apigatewayv2_stage.default.invoke_url}vote"
+    }
+}
+
 resource "aws_s3_bucket_object" "_vote_index_file" {
     bucket = aws_s3_bucket.bucket_vote.id
     key = "index.html"
-    content = templatefile("voting-frontend/index.html", {backend-url = "${aws_apigatewayv2_stage.default.invoke_url}vote"})
+    content = data.template_file.vote_index_file.rendered
+    source_hash = md5(data.template_file.vote_index_file.rendered)
     content_type = "text/html"
 }
 
 resource "aws_s3_bucket_object" "_vote_css_file" {
     bucket = aws_s3_bucket.bucket_vote.id
     source = "voting-frontend/style.css"
+    source_hash = filemd5("voting-frontend/style.css")
     key = "style.css"
     content_type = "text/css"
 }
 
-output "voting-url" {
-    value = aws_s3_bucket.bucket_vote.website_endpoint
-}

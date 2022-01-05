@@ -19,16 +19,25 @@ data "template_file" "s3_public_policy_result" {
     }
 }
 
+data "template_file" "result_js_file" {
+    template = "${file("${path.module}/result-frontend/app.js")}"
+    vars = {
+        backend-url = "${aws_apigatewayv2_stage.default.invoke_url}result"
+    }
+}
+
 resource "aws_s3_bucket_object" "_result_index_file" {
     bucket = aws_s3_bucket.bucket_result.id
     key = "index.html"
     source = "result-frontend/index.html"
+    source_hash = filemd5("result-frontend/index.html")
     content_type = "text/html"
 }
 
 resource "aws_s3_bucket_object" "_result_css_file" {
     bucket = aws_s3_bucket.bucket_result.id
     source = "result-frontend/style.css"
+    source_hash = filemd5("result-frontend/style.css")
     key = "style.css"
     content_type = "text/css"
 }
@@ -36,10 +45,7 @@ resource "aws_s3_bucket_object" "_result_css_file" {
 resource "aws_s3_bucket_object" "_result_js_file" {
     bucket = aws_s3_bucket.bucket_result.id
     key = "app.js"
-    content = templatefile("result-frontend/app.js", {backend-url = "${aws_apigatewayv2_stage.default.invoke_url}result"})
+    content = data.template_file.result_js_file.rendered
+    source_hash = md5(data.template_file.result_js_file.rendered)
     content_type = "application/javascript"
-}
-
-output "result-url" {
-    value = aws_s3_bucket.bucket_result.website_endpoint
 }

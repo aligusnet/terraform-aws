@@ -13,7 +13,9 @@ resource "aws_apigatewayv2_api" "vote" {
     cors_configuration {
         allow_origins = [
             "http://${aws_s3_bucket.bucket_vote.website_endpoint}",
-            "http://${aws_s3_bucket.bucket_result.website_endpoint}"
+            "http://${aws_s3_bucket.bucket_result.website_endpoint}",
+            "https://${aws_cloudfront_distribution.s3_vote.domain_name}",
+            "https://${aws_cloudfront_distribution.s3_result.domain_name}",
             ]
         expose_headers = ["*"]
         max_age = 3000
