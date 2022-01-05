@@ -1,9 +1,9 @@
-variable "api_gateway_name" {
-  default = "vote-api"
+locals {
+    api_gateway_name = "vote-api"
 }
 
 resource "aws_apigatewayv2_api" "vote" {
-    name = var.api_gateway_name
+    name = local.api_gateway_name
     protocol_type = "HTTP"
 
     tags = {
@@ -78,6 +78,6 @@ resource "aws_apigatewayv2_integration" "result-lambda" {
 }
 
 resource "aws_cloudwatch_log_group" "api_gateway" {
-  name = "/aws/api_gateway/${var.api_gateway_name}"
-  retention_in_days = 3
+    name = "/aws/api_gateway/${local.api_gateway_name}"
+    retention_in_days = 3
 }

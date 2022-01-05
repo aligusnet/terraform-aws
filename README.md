@@ -1,6 +1,6 @@
 # terraform-aws
 
-Test project that demostrates using terraform to manage AWS services.
+Test project that demostrates using Terraform to manage AWS services.
 
 ---
 
@@ -25,11 +25,22 @@ It contains 2 stacks:
 
 ## Usage
 
-* Deploy the services on the AWS cloud using Terraform:
+* Initialize Terraform
 
 ```
 > terraform init
+```
+
+* Deploy the services on the AWS cloud using Terraform:
+
+```
 > terraform apply
+```
+
+or if you specify variables' values in `variables.tfvars` file
+
+```
+> terraform apply -var-file="variables.tfvars"
 ```
 
 * Remove the deployed services from AWS cloud.

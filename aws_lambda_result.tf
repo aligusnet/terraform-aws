@@ -1,9 +1,9 @@
-variable "result_lambda_function_name" {
-  default = "lambda_vote_result"
+locals {
+   result_lambda_function_name = "lambda_vote_result"
 }
 
 resource "aws_cloudwatch_log_group" "result_lambda" {
-    name = "/aws/lambda/${var.result_lambda_function_name}"
+    name = "/aws/lambda/${local.result_lambda_function_name}"
     retention_in_days = 3
 }
 
@@ -15,7 +15,7 @@ data "archive_file" "lambda_result" {
 
 resource "aws_lambda_function" "result" {
     filename = data.archive_file.lambda_result.output_path
-    function_name = var.result_lambda_function_name
+    function_name = local.result_lambda_function_name
     role = aws_iam_role.lambda.arn
     handler = "result.lambda_handler"
 
