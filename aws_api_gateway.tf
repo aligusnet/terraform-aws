@@ -23,19 +23,19 @@ resource "aws_apigatewayv2_api" "vote" {
 }
 
 resource "aws_lambda_permission" "vote" {
-	action        = "lambda:InvokeFunction"
-	function_name = aws_lambda_function.vote.arn
-	principal     = "apigateway.amazonaws.com"
+    action        = "lambda:InvokeFunction"
+    function_name = aws_lambda_function.vote.arn
+    principal     = "apigateway.amazonaws.com"
 
-	source_arn = "${aws_apigatewayv2_api.vote.execution_arn}/*/*"
+    source_arn = "${aws_apigatewayv2_api.vote.execution_arn}/*/*"
 }
 
 resource "aws_lambda_permission" "result" {
-	action        = "lambda:InvokeFunction"
-	function_name = aws_lambda_function.result.arn
-	principal     = "apigateway.amazonaws.com"
+    action        = "lambda:InvokeFunction"
+    function_name = aws_lambda_function.result.arn
+    principal     = "apigateway.amazonaws.com"
 
-	source_arn = "${aws_apigatewayv2_api.vote.execution_arn}/*/*"
+    source_arn = "${aws_apigatewayv2_api.vote.execution_arn}/*/*"
 }
 
 resource "aws_apigatewayv2_stage" "default" {

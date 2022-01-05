@@ -37,8 +37,8 @@ def update_count(vote):
     table.update_item(
         Key={'voter': 'count'},
         UpdateExpression="set #vote = #vote + :incr",
-	    ExpressionAttributeNames={'#vote': vote},
-	    ExpressionAttributeValues={':incr': 1}
+        ExpressionAttributeNames={'#vote': vote},
+        ExpressionAttributeValues={':incr': 1}
     )
 
 if __name__ == "__main__":
