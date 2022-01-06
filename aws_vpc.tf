@@ -11,6 +11,7 @@ resource "aws_vpc" "main" {
 resource "aws_subnet" "private" {
     cidr_block = "10.42.0.0/24"
     vpc_id = aws_vpc.main.id
+    availability_zone = "${var.region}b"
     tags = {
         Name = "voting-subnet-private"
     }
@@ -20,6 +21,7 @@ resource "aws_subnet" "public" {
     cidr_block = "10.42.1.0/24"
     vpc_id = aws_vpc.main.id
     map_public_ip_on_launch = true
+    availability_zone = "${var.region}a"
     tags = {
         Name = "voting-subnet-public"
     }
