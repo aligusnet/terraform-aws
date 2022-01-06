@@ -1,15 +1,12 @@
-#!/usr/bin/env python
-
 import boto3
 import json
 import logging
-import exceptions
 import sys
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
-queue = boto3.resource('sqs', region_name='us-east-1').get_queue_by_name(QueueName="votes-queue")
-table = boto3.resource('dynamodb', region_name='us-east-1').Table('Votes')
+queue = boto3.resource('sqs', region_name='${region}').get_queue_by_name(QueueName="votes-queue")
+table = boto3.resource('dynamodb', region_name='${region}').Table('Votes')
 
 def process_message(message):
     try:
@@ -45,7 +42,7 @@ if __name__ == "__main__":
     while True:
         try:
             messages = queue.receive_messages()
-        except exceptions.KeyboardInterrupt:
+        except KeyboardInterrupt:
            logging.info("Stopping...")
            break
         except:

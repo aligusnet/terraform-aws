@@ -13,14 +13,14 @@ resource "aws_s3_bucket" "bucket_vote" {
 }
 
 data "template_file" "s3_public_policy" {
-    template = "${file("${path.module}/policies/s3-public.json")}"
+    template = file("${path.module}/policies/s3-public.json")
     vars = {
         bucket_name = local.bucket_vote
     }
 }
 
 data "template_file" "vote_index_file" {
-    template = "${file("${path.module}/voting-frontend/index.html")}"
+    template = file("${path.module}/voting-frontend/index.html")
     vars = {
         backend-url = "${aws_apigatewayv2_stage.default.invoke_url}vote"
     }

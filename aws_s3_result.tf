@@ -5,7 +5,7 @@ locals {
 resource "aws_s3_bucket" "bucket_result" {
     bucket = local.bucket_result
     acl = "public-read"
-    policy = "${data.template_file.s3_public_policy_result.rendered}"
+    policy = data.template_file.s3_public_policy_result.rendered
 
     website {
         index_document = "index.html"
@@ -13,14 +13,14 @@ resource "aws_s3_bucket" "bucket_result" {
 }
 
 data "template_file" "s3_public_policy_result" {
-    template = "${file("${path.module}/policies/s3-public.json")}"
+    template = file("${path.module}/policies/s3-public.json")
     vars = {
         bucket_name = local.bucket_result
     }
 }
 
 data "template_file" "result_js_file" {
-    template = "${file("${path.module}/result-frontend/app.js")}"
+    template = file("${path.module}/result-frontend/app.js")
     vars = {
         backend-url = "${aws_apigatewayv2_stage.default.invoke_url}result"
     }

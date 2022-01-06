@@ -7,9 +7,17 @@ resource "aws_cloudwatch_log_group" "voting_lambda" {
     retention_in_days = 3
 }
 
+data "template_file" "voting_py" {
+    template = file("${path.module}/lambda/voting.py")
+    vars = {
+        region = var.region
+    }
+}
+
 data "archive_file" "lambda_vote" {
     type = "zip"
-    source_file = "${path.module}/lambda/voting.py"
+    source_content = data.template_file.voting_py.rendered
+    source_content_filename = "voting.py"
     output_path = "${path.module}/files/voting-lambda.zip"
 }
 

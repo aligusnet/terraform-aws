@@ -22,7 +22,7 @@ def lambda_handler(event, context):
     return {'statusCode': 200, 'body': '{"status": "success"}'}
 
 def publish_vote(vote, voter):
-    sns = boto3.client('sns', region_name='us-east-1')
+    sns = boto3.client('sns', region_name='${region}')
     topicArn = os.environ.get('TOPIC_ARN')
     logging.info('Sending message to: %s', topicArn)
     sns.publish(
