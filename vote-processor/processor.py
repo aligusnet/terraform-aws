@@ -2,6 +2,7 @@ import boto3
 import json
 import logging
 import sys
+import time
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
@@ -50,3 +51,4 @@ if __name__ == "__main__":
             continue
         for message in messages:
             process_message(message)
+        time.sleep(0.25)
