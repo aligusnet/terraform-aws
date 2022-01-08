@@ -50,3 +50,7 @@ or if you specify variables' values in `variables.tfvars` file
 ```
 > terraform destroy
 ```
+
+## User Permissions
+
+Please find the file with the required user permissions for the example in [policies/user_policy.json](policies/user_policy.json).

@@ -1,0 +1,68 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "ServicesPermissions",
+            "Effect": "Allow",
+            "Action": [
+                "iam:CreateInstanceProfile",
+                "iam:UpdateAssumeRolePolicy",
+                "iam:GetPolicyVersion",
+                "iam:UntagRole",
+                "iam:TagRole",
+                "iam:RemoveRoleFromInstanceProfile",
+                "iam:DeletePolicy",
+                "iam:CreateRole",
+                "iam:AttachRolePolicy",
+                "iam:PutRolePolicy",
+                "iam:AddRoleToInstanceProfile",
+                "iam:ListInstanceProfilesForRole",
+                "iam:PassRole",
+                "iam:DetachRolePolicy",
+                "iam:DeleteRolePolicy",
+                "iam:ListAttachedRolePolicies",
+                "iam:ListRolePolicies",
+                "iam:CreatePolicyVersion",
+                "iam:DeleteInstanceProfile",
+                "iam:GetRole",
+                "iam:GetInstanceProfile",
+                "iam:GetPolicy",
+                "iam:DeleteRole",
+                "iam:UpdateAccessKey",
+                "iam:TagPolicy",
+                "iam:CreatePolicy",
+                "iam:CreateServiceLinkedRole",
+                "iam:ListPolicyVersions",
+                "iam:UntagPolicy",
+                "iam:UpdateRole",
+                "iam:UntagInstanceProfile",
+                "iam:GetRolePolicy",
+                "iam:DeletePolicyVersion",
+                "iam:TagInstanceProfile",
+                "iam:SetDefaultPolicyVersion"
+            ],
+            "Resource": [
+                "arn:aws:iam::${ACCOUND_ID}:policy/*",
+                "arn:aws:iam::${ACCOUND_ID}:user/*",
+                "arn:aws:iam::${ACCOUND_ID}:instance-profile/*",
+                "arn:aws:iam::${ACCOUND_ID}:role/*"
+            ]
+        },
+        {
+            "Sid": "IAMPermissions",
+            "Effect": "Allow",
+            "Action": [
+                "sns:*",
+                "cloudfront:*",
+                "s3:*",
+                "apigateway:*",
+                "logs:*",
+                "lambda:*",
+                "ec2:*",
+                "dynamodb:*",
+                "sqs:*"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
